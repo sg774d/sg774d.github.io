@@ -1,0 +1,473 @@
+<!-- Сделать реализацию flask-wtf при отправке контактов -->
+
+
+
+
+<!DOCTYPE html>
+<html lang="en-gb" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <meta name="author" content="Aleš Trunda alestrunda.cz">
+  <meta name="robots" content="index, follow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="icon.png" type="image/png">
+  <link rel="stylesheet" href="font-awesome/font-awesome/css/font-awesome.min.css" type="text/css">
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600italic,700%7CMontserrat:400,700%7CLato' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" type="text/css">
+  <link rel="stylesheet" href="owl-carousel/owl.carousel.css" type="text/css">
+  <link rel="stylesheet" href="masterslider/style/masterslider.css" type="text/css">
+  <link rel="stylesheet" href="styles/main.css" type="text/css">
+  <script type="text/javascript" src="js/modernizr.js"></script>
+  <title>ХОМIКО</title>
+  <style>
+                #theme-customizer {
+                        position: fixed;
+                        width: 225px;
+                        left: 0;
+                        top: 40%;
+                        background-color: #f7f7f7;
+                        border: 1px #e5e5e5 solid;
+                        z-index: 9999;
+                        padding: 30px 0 30px 30px;
+                        color: #696969;
+                        font-size: 18px;
+                        -webkit-transition: all 0.2s ease-out;
+                        -moz-transition: all 0.2s ease-out;
+                        -o-transition: all 0.2s ease-out;
+                        transition: all 0.2s ease-out;
+                }
+
+                #theme-customizer.slide-out {
+                        left: -225px;
+                }
+
+                #theme-customizer a {
+                        color: #696969;
+                        -webkit-transition: all 0.1s ease-out;
+                        -moz-transition: all 0.1s ease-out;
+                        -o-transition: all 0.1s ease-out;
+                        transition: all 0.1s ease-out;
+                }
+
+                #theme-customizer a:hover {
+                        text-decoration: underline;
+                        color: #feb822;
+                }
+
+                #theme-customizer p {
+                        margin-bottom: 5px;
+                        color: #696969;
+                }
+
+                #theme-customizer .theme-customizer-header {
+                        color: #000;
+                        margin-bottom: 25px;
+                }
+
+                #theme-customizer .theme-customizer-subheader {
+                        font-style: italic;
+                        font-size: 14px;
+                        color: #000;
+                }
+
+                #theme-customizer .theme-customizer-icon {
+                        position: absolute;
+                        right: -31px;
+                        top: -1px;
+                        height: 32px;
+                        width: 32px;
+                        font-size: 15px;
+                        line-height: 30px;
+                        border: 1px #e5e5e5 solid;
+                        border-left: none;
+                        background-color: #f7f7f7;
+                        text-align: center;
+                        padding-left: 2px;
+                        cursor: pointer;
+                }
+  </style>
+</head>
+<body>
+  <div id="all">
+    <!-- <div id="theme-customizer">
+      <div class="theme-customizer-icon"></div>
+      <p class="theme-customizer-header">Customize Template</p>
+      <p class="theme-customizer-subheader">Template Styles:</p>
+      <p><a class="theme-syle" id="theme-normal" href="#">Normal</a></p>
+      <p><a class="theme-syle" id="theme-dark" href="#">Dark</a></p>
+    </div> -->
+
+    <header class="page-header">
+      <div class="page-header-content container">
+        <div class="menu-button-container">
+          <i id="menu-button" class="menu-button fa fa-reorder"></i>
+        </div>
+        <nav id="nav-top" class="nav-top">
+          <ul>
+            <li>
+              <a href="#">Головна</a>
+            </li>
+            <li>
+              <a href="about.html">Про компанiю</a>
+            </li>
+          </ul>
+          <h1 class="logo-primary"><img id="logo-1" alt="Bakery" src="images/logo1.png"></h1>
+          <ul>
+            <li>
+              <a href="shop.html">Каталог</a>
+            </li>
+            <li>
+              <a href="delivery.html">Доставка</a>
+            </li>
+          </ul>
+
+            <label class="switch">
+              <span class="sun"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g fill="#ffd43b"><circle r="5" cy="12" cx="12"></circle><path d="m21 13h-1a1 1 0 0 1 0-2h1a1 1 0 0 1 0 2zm-17 0h-1a1 1 0 0 1 0-2h1a1 1 0 0 1 0 2zm13.66-5.66a1 1 0 0 1 -.66-.29 1 1 0 0 1 0-1.41l.71-.71a1 1 0 1 1 1.41 1.41l-.71.71a1 1 0 0 1 -.75.29zm-12.02 12.02a1 1 0 0 1 -.71-.29 1 1 0 0 1 0-1.41l.71-.66a1 1 0 0 1 1.41 1.41l-.71.71a1 1 0 0 1 -.7.24zm6.36-14.36a1 1 0 0 1 -1-1v-1a1 1 0 0 1 2 0v1a1 1 0 0 1 -1 1zm0 17a1 1 0 0 1 -1-1v-1a1 1 0 0 1 2 0v1a1 1 0 0 1 -1 1zm-5.66-14.66a1 1 0 0 1 -.7-.29l-.71-.71a1 1 0 0 1 1.41-1.41l.71.71a1 1 0 0 1 0 1.41 1 1 0 0 1 -.71.29zm12.02 12.02a1 1 0 0 1 -.7-.29l-.66-.71a1 1 0 0 1 1.36-1.36l.71.71a1 1 0 0 1 0 1.41 1 1 0 0 1 -.71.24z"></path></g></svg></span>
+              <span class="moon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="m223.5 32c-123.5 0-223.5 100.3-223.5 224s100 224 223.5 224c60.6 0 115.5-24.2 155.8-63.4 5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6-96.9 0-175.5-78.8-175.5-176 0-65.8 36-123.1 89.3-153.3 6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z"></path></svg></span>
+              <input type="checkbox" class="input" id="theme-dark"></input>
+              <span class="sliderbutton"></span>
+            </label>
+
+        </nav>
+      </div>
+    </header>
+    <section id="slider-container" class="top-section">
+      <div class="offset-borders">
+        <div class="ms-fullscreen-template">
+          <div class="master-slider ms-skin-round" id="masterslider">
+            <div class="ms-slide">
+              <img id="sunflower" src="images/slider/1.jpg" alt="header img">
+              <div class="ms-layer">
+                <h2 class="ms-layer" data-type="text" data-effect="rotate3dbottom(30,0,0,70)">ХОМIКО</h2>
+                <h3 class="ms-layer" data-type="text" data-effect="rotate3dbottom(30,0,0,70)" data-delay="200">ТОРГОВИЙ ДIМ</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="products-section">
+      <div class="section-content">
+        <div class="container">
+          <header class="section-header">
+            <h1>Топ продажiв</h1>
+          </header>
+          <div id="products-slider-1" class="products-slider">
+            <div>
+              <div class="row">
+                <div class="col-md-6 onscroll-animate">
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <div class="product">
+                        <div class="product-label-container"></div>
+                        <div class="product-preview">
+                          <a><img alt="product 1" src="images/product1.png"></a>
+                        </div>
+                        <div class="product-detail-container">
+                          <div class="product-detail">
+                            <h2><a>Печiво «Браунi»</a></h2>
+                            <p>3кг | 30 днiв</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="product">
+                        <div class="product-preview">
+                          <a><img alt="product 2" src="images/product2.png"></a>
+                        </div>
+                        <div class="product-detail-container">
+                          <div class="product-detail">
+                            <h2><a>Козинак «Сонячний промінчик»</a></h2>
+                            <p>2,8кг | 180 днiв</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 onscroll-animate" data-delay="300">
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <div class="product">
+                        <div class="product-label-container"></div>
+                        <div class="product-preview">
+                          <a><img alt="product 3" src="images/product3.png"></a>
+                        </div>
+                        <div class="product-detail-container">
+                          <div class="product-detail">
+                            <h2><a>Печiво «Злакове»</a></h2>
+                            <p>2кг | 180 днiв</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="product">
+                        <div class="product-preview">
+                          <a><img alt="product 4" src="images/product4.png"></a>
+                        </div>
+                        <div class="product-detail-container">
+                          <div class="product-detail">
+                            <h2><a>Козинак «Сезамка»</a></h2>
+                            <p>1.5кг | 180 днiв</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 onscroll-animate">
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <div class="product">
+                        <div class="product-preview">
+                          <a><img alt="product 5" src="images/product5.png"></a>
+                        </div>
+                        <div class="product-detail-container">
+                          <div class="product-detail">
+                            <h2><a>Вафельна трубочка «Павутинка»</a></h2>
+                            <p>2.1кг | 90 днiв</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="product">
+                        <div class="product-label-container"></div>
+                        <div class="product-preview">
+                          <a><img alt="product 6" src="images/product6.png"></a>
+                        </div>
+                        <div class="product-detail-container">
+                          <div class="product-detail">
+                            <h2><a>Палочка «Вершкова»</a></h2>
+                            <p>2кг | 30 днiв</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 onscroll-animate" data-delay="300">
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <div class="product">
+                        <div class="product-preview">
+                          <a><img alt="product 7" src="images/product7.png"></a>
+                        </div>
+                        <div class="product-detail-container">
+                          <div class="product-icons"></div>
+                          <div class="product-detail">
+                            <h2><a>Зефiр «Бiло-Рожевий»</a></h2>
+                            <p>1.6кг | 120 днiв</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="product">
+                        <div class="product-preview">
+                          <a><img alt="product 8" src="images/product8.png"></a>
+                        </div>
+                        <div class="product-detail-container">
+                          <div class="product-icons"></div>
+                          <div class="product-detail">
+                            <h2><a>Зефiр «Глазурований»</a></h2>
+                            <p>1.7кг | 150 днiв</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <p class="text-center onscroll-animate"><a href="shop.html" class="button-void">Каталог</a></p>
+  <div class="margin-60"></div>
+  <section id="services-section">
+    <div class="section-content tool-section">
+      <div class="container tool-container">
+        <div class="tool-top"></div>
+        <div class="tool-bottom"></div>
+        <header class="section-header onscroll-animate">
+          <h1>Чому нам довіряють?</h1>
+        </header>
+        <div class="row">
+          <div class="col-md-6 onscroll-animate">
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="service-box">
+                  <div class="icon-big-container">
+                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1000px" height="1000px" viewbox="0 0 1000 1000" enable-background="new 0 0 1000 1000" xml:space="preserve">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M212,221.98C85.964,187.169-7.941,251.248,1.822,368.833 C12.704,499.854,173.083,554.99,247.029,614.643c11.223,93.028,30.146,178.345,41.392,271.35 c113.273-60.703,353.142-66.429,496.766-28.743c13.14-86.846,30.934-169.037,44.575-255.358 c60.497-35.176,153.685-105.619,168.764-201.133c18.843-119.102-66.68-197.21-194.222-162.81 c20.53-149.407-258.347-155.806-283.417-41.506C484.741,71.227,230.387,105.114,212,221.98z"></path></svg>
+                  </div>
+                  <h2>Приготовлено з любов'ю</h2>
+                  <div class="horizontal-delimiter"></div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="service-box">
+                  <div class="icon-big-container">
+                    <svg fill="#000000" height="800px" width="800px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewbox="0 0 503.607 503.607" xml:space="preserve">
+                    <g transform="translate(1 1)">
+                      <g>
+                        <g>
+                          <path d="M477.426,57.754h-75.541v-8.393c0-9.233-7.554-16.787-16.787-16.787h-25.18V24.18c0-14.269-10.911-25.18-25.18-25.18 h-50.361c-14.269,0-25.18,10.911-25.18,25.18v8.393h-25.18c-9.233,0-16.787,7.554-16.787,16.787v8.393h-75.541 c-5.036,0-8.393,3.357-8.393,8.393v428.066c0,5.036,3.357,8.393,8.393,8.393h335.738c5.036,0,8.393-3.357,8.393-8.393V66.148 C485.82,61.111,482.462,57.754,477.426,57.754z M427.066,376.705h-58.754c-5.036,0-8.393,3.357-8.393,8.393v58.754H192.049 V108.115h25.18c0,9.233,7.554,16.787,16.787,16.787h151.082c9.233,0,16.787-7.554,16.787-16.787h25.18V376.705z M415.315,393.492 l-38.61,38.61v-38.61H415.315z M234.016,49.361h33.574c5.036,0,8.393-3.357,8.393-8.393V24.18c0-5.036,3.357-8.393,8.393-8.393 h50.361c5.036,0,8.393,3.357,8.393,8.393v16.787c0,5.036,3.357,8.393,8.393,8.393h33.574v16.787v33.574v8.393H234.016v-8.393 V66.148V49.361z M469.033,485.82H150.082V74.541h67.148v16.787h-33.574c-5.036,0-8.393,3.357-8.393,8.393v352.525 c0,5.036,3.357,8.393,8.393,8.393h184.656c3.343,0,5.939-1.486,7.312-3.954l64.275-64.275c2.021-1.124,3.383-3.066,3.809-5.571 c0.161-0.714,0.212-1.451,0.146-2.2V99.721c0-5.036-3.357-8.393-8.393-8.393h-33.574V74.541h67.148V485.82z"></path>
+                          <path d="M275.984,150.082h-50.361c-5.036,0-8.393,3.357-8.393,8.393v50.361c0,5.036,3.357,8.393,8.393,8.393h50.361 c5.036,0,8.393-3.357,8.393-8.393v-50.361C284.377,153.439,281.02,150.082,275.984,150.082z M267.59,200.443h-33.574v-33.574 h33.574V200.443z"></path>
+                          <path d="M275.984,242.41h-50.361c-5.036,0-8.393,3.357-8.393,8.393v50.361c0,5.036,3.357,8.393,8.393,8.393h50.361 c5.036,0,8.393-3.357,8.393-8.393v-50.361C284.377,245.767,281.02,242.41,275.984,242.41z M267.59,292.77h-33.574v-33.574h33.574 V292.77z"></path>
+                          <path d="M275.984,334.738h-50.361c-5.036,0-8.393,3.357-8.393,8.393v50.361c0,5.036,3.357,8.393,8.393,8.393h50.361 c5.036,0,8.393-3.357,8.393-8.393v-50.361C284.377,338.095,281.02,334.738,275.984,334.738z M267.59,385.098h-33.574v-33.574 h33.574V385.098z"></path>
+                          <path d="M393.492,150.082h-75.541c-5.036,0-8.393,3.357-8.393,8.393s3.357,8.393,8.393,8.393h75.541 c5.036,0,8.393-3.357,8.393-8.393S398.528,150.082,393.492,150.082z"></path>
+                          <path d="M317.951,208.836h50.361c5.036,0,8.393-3.357,8.393-8.393s-3.357-8.393-8.393-8.393h-50.361 c-5.036,0-8.393,3.357-8.393,8.393S312.915,208.836,317.951,208.836z"></path>
+                          <path d="M393.492,242.41h-75.541c-5.036,0-8.393,3.357-8.393,8.393s3.357,8.393,8.393,8.393h75.541 c5.036,0,8.393-3.357,8.393-8.393S398.528,242.41,393.492,242.41z"></path>
+                          <path d="M317.951,301.164h50.361c5.036,0,8.393-3.357,8.393-8.393s-3.357-8.393-8.393-8.393h-50.361 c-5.036,0-8.393,3.357-8.393,8.393S312.915,301.164,317.951,301.164z"></path>
+                          <path d="M393.492,343.131h-75.541c-5.036,0-8.393,3.357-8.393,8.393s3.357,8.393,8.393,8.393h75.541 c5.036,0,8.393-3.357,8.393-8.393S398.528,343.131,393.492,343.131z"></path>
+                          <path d="M334.738,385.098h-16.787c-5.036,0-8.393,3.357-8.393,8.393c0,5.036,3.357,8.393,8.393,8.393h16.787 c5.036,0,8.393-3.357,8.393-8.393C343.131,388.456,339.774,385.098,334.738,385.098z"></path>
+                          <path d="M99.721,91.328V57.754v-25.18C99.721,14.108,84.613-1,66.148-1H49.361C30.895-1,15.787,14.108,15.787,32.574v25.18 v33.574v335.738c0,1.41,0.541,3.077,1.446,4.572L50.2,497.57c1.679,3.357,4.197,5.036,7.554,5.036 c3.357,0,5.875-1.679,7.554-4.197l33.574-67.148c1.679-2.518,1.679-4.197,0.839-6.715V91.328z M32.574,414.475V99.721h16.787 v311.45c-2.882,0.305-5.752,0.761-8.598,1.367C38.033,413.031,35.304,413.656,32.574,414.475z M32.574,66.148h50.361v16.787 H32.574V66.148z M66.148,411.087V99.721h16.787v314.737C77.443,412.754,71.817,411.63,66.148,411.087z M49.361,15.787h16.787 c9.233,0,16.787,7.554,16.787,16.787v16.787H32.574V32.574C32.574,23.341,40.128,15.787,49.361,15.787z M57.754,475.748 l-21.746-44.328c11.889-4.134,24.921-4.82,37.188-2.047c0.247,0.06,0.494,0.114,0.74,0.177c0.167,0.04,0.331,0.089,0.498,0.13 c1.724,0.458,3.44,0.982,5.143,1.583L57.754,475.748z"></path>
+                        </g>
+                      </g>
+                    </g></svg>
+                  </div>
+                  <h2>Контроль якості</h2>
+                  <div class="horizontal-delimiter"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 onscroll-animate" data-delay="400">
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="service-box">
+                  <div class="icon-big-container">
+                    <svg fill="#000000" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="800px" height="800px" viewbox="0 0 612.001 612" xml:space="preserve">
+                    <g>
+                      <path d="M604.131,440.17h-19.12V333.237c0-12.512-3.776-24.787-10.78-35.173l-47.92-70.975 c-11.725-17.311-31.238-27.698-52.169-27.698h-74.28c-8.734,0-15.737,7.082-15.737,15.738v225.043H262.475 c11.567,9.992,19.514,23.92,21.796,39.658H412.53c4.563-31.238,31.475-55.396,63.972-55.396c32.498,0,59.33,24.158,63.895,55.396 h63.735c4.328,0,7.869-3.541,7.869-7.869V448.04C612,443.713,608.46,440.17,604.131,440.17z M525.76,312.227h-98.044 c-4.327,0-7.868-3.463-7.868-7.869v-54.372c0-4.328,3.541-7.869,7.868-7.869h59.724c2.597,0,4.957,1.259,6.452,3.305l38.32,54.451 C535.831,305.067,532.133,312.227,525.76,312.227z M476.502,440.17c-27.068,0-48.943,21.953-48.943,49.021 c0,26.99,21.875,48.943,48.943,48.943c26.989,0,48.943-21.953,48.943-48.943C525.445,462.125,503.491,440.17,476.502,440.17z M476.502,513.665c-13.535,0-24.472-11.016-24.472-24.471c0-13.535,10.937-24.473,24.472-24.473 c13.533,0,24.472,10.938,24.472,24.473C500.974,502.649,490.036,513.665,476.502,513.665z M68.434,440.17 c-4.328,0-7.869,3.543-7.869,7.869v23.922c0,4.328,3.541,7.869,7.869,7.869h87.971c2.282-15.738,10.229-29.666,21.718-39.658 H68.434V440.17z M220.298,440.17c-26.989,0-48.943,21.953-48.943,49.021c0,26.99,21.954,48.943,48.943,48.943 c27.068,0,48.943-21.953,48.943-48.943C269.242,462.125,247.367,440.17,220.298,440.17z M220.298,513.665 c-13.534,0-24.471-11.016-24.471-24.471c0-13.535,10.937-24.473,24.471-24.473c13.534,0,24.472,10.938,24.472,24.473 C244.77,502.649,233.832,513.665,220.298,513.665z M338.014,150.605h-91.198c4.485,13.298,6.846,27.54,6.846,42.255 c0,74.28-60.431,134.711-134.711,134.711c-13.535,0-26.675-2.045-39.029-5.744v86.949c0,4.328,3.541,7.869,7.869,7.869h265.96 c4.329,0,7.869-3.541,7.869-7.869V174.211C361.619,161.149,351.075,150.605,338.014,150.605z M118.969,73.866 C53.264,73.866,0,127.129,0,192.834s53.264,118.969,118.969,118.969s118.97-53.264,118.97-118.969S184.674,73.866,118.969,73.866z M118.969,284.73c-50.752,0-91.896-41.143-91.896-91.896c0-50.753,41.144-91.896,91.896-91.896 c50.753,0,91.896,41.144,91.896,91.896C210.865,243.587,169.722,284.73,118.969,284.73z M154.066,212.242 c-1.014,0-2.052-0.131-3.082-0.407L112.641,201.5c-5.148-1.391-8.729-6.062-8.729-11.396v-59.015 c0-6.516,5.287-11.803,11.803-11.803c6.516,0,11.803,5.287,11.803,11.803v49.971l29.614,7.983 c6.294,1.698,10.02,8.177,8.322,14.469C164.033,208.776,159.269,212.242,154.066,212.242z"></path>
+                    </g></svg>
+                  </div>
+                  <h2>Швидка доставка</h2>
+                  <div class="horizontal-delimiter"></div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="service-box">
+                  <div class="icon-big-container">
+                    <svg height="800px" width="800px" version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewbox="0 0 512 512" xml:space="preserve">
+                    <g>
+                      <path class="st0" d="M200.985,258.023c1.462,5.283,6.919,8.388,12.201,6.926c5.276-1.455,8.381-6.912,6.926-12.195 c-2.243-8.12-7.056-15.118-13.511-20.104c-6.448-4.994-14.612-7.975-23.368-7.968c-8.714-0.007-16.827,2.938-23.246,7.859 c-6.426,4.928-11.253,11.846-13.547,19.88c-1.505,5.269,1.556,10.754,6.817,12.252c5.269,1.506,10.762-1.548,12.267-6.817h-0.008 c1.093-3.821,3.416-7.178,6.528-9.56c3.127-2.381,6.94-3.77,11.189-3.778c4.262,0.008,8.112,1.418,11.239,3.828 C197.598,250.764,199.928,254.151,200.985,258.023z"></path>
+                      <path class="st0" d="M352.085,232.65c-6.455-4.994-14.618-7.975-23.375-7.968c-8.706-0.007-16.818,2.938-23.245,7.859 c-6.434,4.928-11.254,11.846-13.548,19.873c-1.512,5.268,1.542,10.761,6.81,12.259c5.269,1.506,10.754-1.548,12.26-6.817 c1.093-3.821,3.423-7.178,6.535-9.56c3.126-2.381,6.941-3.77,11.188-3.778c4.263,0.008,8.112,1.418,11.239,3.828 c3.127,2.417,5.45,5.804,6.513,9.676c1.455,5.283,6.919,8.388,12.194,6.926c5.283-1.455,8.388-6.912,6.934-12.195 C363.346,244.634,358.533,237.636,352.085,232.65z"></path>
+                      <path class="st0" d="M307.853,327.36c-11.819,16.362-30.982,26.552-51.853,26.546c-20.828,0.007-40.02-10.19-51.846-26.552 c-3.206-4.437-9.408-5.435-13.844-2.229c-4.444,3.213-5.442,9.408-2.228,13.851c15.479,21.429,40.577,34.766,67.918,34.766 c27.377,0,52.461-13.338,67.934-34.774c3.198-4.444,2.207-10.638-2.237-13.844C317.254,321.918,311.059,322.916,307.853,327.36z"></path>
+                      <path class="st0" d="M494.017,230.848c-10.089-10.11-23.832-16.674-38.994-17.76c-9.452-44.37-33.029-83.5-66.008-112.18 c-36.033-31.351-83.239-50.37-134.745-50.362c-51.44-0.008-98.582,18.954-134.593,50.232 c-33.153,28.76-56.825,68.071-66.233,112.658c-13.758,1.795-26.154,8.098-35.461,17.412C6.896,241.92-0.007,257.357,0,274.27 c-0.007,16.905,6.896,32.356,17.984,43.414c11.073,11.094,26.509,17.991,43.422,17.984c1.194,0,2.33-0.174,3.496-0.246 c14.785,35.208,38.964,65.452,69.532,87.459c33.702,24.273,75.156,38.58,119.837,38.573c44.869,0.007,86.496-14.438,120.264-38.892 c30.424-22.022,54.487-52.215,69.185-87.335c2.258,0.26,4.545,0.441,6.883,0.441c16.905,0.007,32.349-6.89,43.415-17.984 c11.094-11.058,17.991-26.509,17.983-43.414C512.008,257.357,505.11,241.92,494.017,230.848z M284.81,81.593 c1.013,1.172,2.07,2.497,3.119,4.082c4.48,6.788,8.988,17.455,9.017,34.332c0.008,12.744-2.7,29.128-10.255,49.71 c-23.86-19.207-37.553-36.909-45.253-51.491c-8.387-15.907-9.9-28.202-9.914-35.324c0-0.919,0.043-1.664,0.08-2.403 c7.439-0.955,14.966-1.614,22.666-1.614C264.699,78.886,274.888,79.863,284.81,81.593z M226.394,126.165 c4.292,8.127,10.154,16.884,17.795,26.024c-7.663-3.097-15.342-5.992-22.55-9.046c-12.325-5.196-23.144-11-30.475-18.736 c-3.684-3.879-6.578-8.214-8.641-13.461c-1.694-4.349-2.779-9.422-3.119-15.4c11.123-5.204,22.897-9.198,35.135-12.006 C214.619,93.165,216.87,108.153,226.394,126.165z M473.978,297.645c-6.021,6.006-14.2,9.675-23.376,9.69 c-3.793-0.008-7.433-0.68-10.95-1.91l-13.417-4.718l-4.668,13.432c-12.028,34.6-34.499,64.373-63.642,85.468 c-29.165,21.089-64.894,33.5-103.655,33.507c-38.602-0.007-74.186-12.31-103.278-33.232 c-29.079-20.922-51.563-50.471-63.714-84.832l-4.4-12.433l-12.716,3.495c-2.902,0.789-5.804,1.224-8.756,1.224 c-9.177-0.015-17.354-3.684-23.383-9.69c-6.006-6.029-9.676-14.199-9.683-23.376c0.007-9.176,3.676-17.348,9.683-23.383 c6.028-6,14.206-9.669,23.383-9.676c0.578-0.007,1.44,0.044,2.634,0.138l13.142,1.035l1.968-13.048 c6.426-42.561,27.993-80.164,59.097-107.158c7.773-6.737,16.124-12.809,24.982-18.135c0.768,4.805,1.947,9.306,3.597,13.446 c2.62,6.564,6.281,12.252,10.616,17.108c7.613,8.525,17.13,14.518,27.066,19.432c14.923,7.338,31.054,12.411,44.602,18.736 c6.774,3.148,12.874,6.564,17.868,10.501c5.016,3.959,8.923,8.351,11.71,13.685c1.499,2.887,4.487,4.653,7.737,4.58 c3.256-0.079,6.166-1.982,7.526-4.943c14.698-31.842,19.995-56.897,20.003-76.581c0.022-13.331-2.475-24.15-6-32.668 c23.246,7.396,44.464,19.308,62.469,34.954c31.105,27.066,52.664,64.778,59.01,107.426l2.085,14.076l14.068-2.15 c1.874-0.282,3.525-0.434,5.016-0.434c9.176,0.007,17.354,3.676,23.376,9.676c6.006,6.035,9.675,14.206,9.69,23.383 C483.653,283.447,479.984,291.617,473.978,297.645z"></path>
+                    </g></svg>
+                  </div>
+                  <h2>Щасливий покупець</h2>
+                  <div class="horizontal-delimiter"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="margin-100"></div>
+  <footer class="page-footer">
+    <div class="footer-dark">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="row">
+              <div class="col-sm-6 footer-column onscroll-animate">
+                <h4>Часи роботи</h4>
+                <p>Понеділок - П'ятниця: <span class="highlight">10:00 - 17:00</span><br>
+                Суббота - Недiля: <span class="highlight">Вихідний</span></p>
+                <div class="margin-40"></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="row">
+              <div class="col-sm-6 footer-column onscroll-animate">
+                <h4>КОНТАКТИ</h4>
+                <div class="icon-opening-wrapper">
+                    <div class="icon-opening-container">
+                        <p class="icon-opening"><i class="fa fa-phone"></i></p>
+                        <p class="icon-opening-content">+380-99-00-00-000</p>
+                    </div>
+                </div>
+                <div class="icon-opening-wrapper">
+                    <div class="icon-opening-container">
+                        <p class="icon-opening"><i class="fa fa-location-arrow"></i></p>
+                        <p class="icon-opening-content">Україна м.Харкiв<br></p>
+                    </div>
+                </div>
+                <div class="icon-opening-wrapper">
+                    <div class="icon-opening-container">
+                        <p class="icon-opening"><i class="fa fa-envelope"></i></p>
+                        <p class="icon-opening-content">Bonita@ukr.net</p>
+                    </div>
+                </div>
+                <div class="icon-opening-wrapper">
+                    <div class="icon-opening-container">
+                        <p class="icon-opening"><i class="fa fa-globe"></i></p>
+                        <p class="icon-opening-content">www.example.com</p>
+                    </div>
+                </div>
+                <div class="margin-40"></div>
+            </div>
+        </div>
+        <p class="site-info">2024 All rights reserved by </p>
+      </div>
+    </div>
+  </footer>
+  <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+  <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="owl-carousel/owl.carousel.min.js"></script>
+  <script type="text/javascript" src="masterslider/masterslider.js"></script>
+  <script type="text/javascript" src="js/jquery.scrollTo.min.js"></script>
+  <script type="text/javascript" src="js/jquery.stellar.min.js"></script>
+  <script type="text/javascript" src="js/placeholder-fallback.js"></script>
+  <script type="text/javascript" src="js/jquery.inview.min.js"></script>
+  <script type="text/javascript" src="js/custom.js"></script>
+  <script type="text/javascript">
+
+
+  document.getElementById('theme-dark').addEventListener('change', () => {
+    var logo1 = $('#logo-1');
+    var sunflower = $('#sunflower');
+    var body_el = $('body');
+    var all_el = $('#all');
+
+    if($('#dark-stylesheet').length > 0) {
+			$('#dark-stylesheet')[0].disabled=true;
+			$('#dark-stylesheet').remove();
+
+      body_el.removeClass();
+			all_el.removeClass();
+			$('#devices-section.section-black-cover').removeClass('section-black-cover').addClass('section-color-cover');
+			$('.section-black-cover').removeClass('section-black-cover').addClass('section-white-cover');
+      logo1.attr('src', 'images/logo1.png');
+      sunflower.attr('src', 'images/slider/1.jpg');
+		}
+
+    else {
+      $('head').append('<link id="dark-stylesheet" rel="stylesheet" type="text/css" href="styles/dark-skin.css">');
+      $('.section-white-cover').removeClass('section-white-cover').addClass('section-black-cover');
+      $('#devices-section').removeClass('section-color-cover').addClass('section-black-cover');
+      logo1.attr('src', 'images/logo_dark_skin.png');
+      sunflower.attr('src', 'images/slider/2.png');
+    }
+    $(window).trigger('resize');
+  });
+  </script>
+
+</body>
+</html>
